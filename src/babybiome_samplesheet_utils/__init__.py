@@ -21,15 +21,16 @@ finally:
 
 def create_samplesheet(samples, directory):
     """Convenience function to create the sample sheet."""
+    import pandas as pd
 
     fastq_finder = FASTQPathFinder(directory)
-    fastq_paths = fastq_finder.find_paths(sample_info['ID'])
+    fastq_paths = fastq_finder.find_paths(samples['ID'])
 
     return (
         pd.DataFrame.from_dict(fastq_paths, 'index')
         .rename_axis('ID')    
         .reset_index()
-        .merge(sample_info, how='right')
+        .merge(samples, how='right')
         .explode(['fastq_1', 'fastq_2'])
     )
 

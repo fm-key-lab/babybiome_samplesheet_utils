@@ -14,6 +14,27 @@ babybiome_samplesheet_utils
 
 Utility functions to prepare sample info from the "baby biome" project as tabular data.
 
+Usage
+=====
+
+.. code-block:: python
+
+    import babybiome_samplesheet_utils as bbb
+    import pandas as pd
+
+
+    sample_info = pd.read_excel('/path/to/samples.xlsx', engine='openpyxl', names=['ID', 'species'])
+
+    samplesheet = (
+        bbb.create_samplesheet(sample_info, data_directory)
+        # Create unique `sample` identifier
+        .rename_axis('sample')
+        .reset_index()
+        # NOTE: For real usage, log before blind drops
+        .dropna()
+    )
+
+    bbb.SamplesheetSchema.validate(samplesheet)
 
 .. _pyscaffold-notes:
 
