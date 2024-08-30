@@ -26,7 +26,7 @@ Usage
     sample_info = pd.read_excel('/path/to/samples.xlsx', engine='openpyxl', names=['ID', 'species'])
 
     samplesheet = (
-        bbb.create_samplesheet(sample_info, data_directory)
+        bbb.create_samplesheet(sample_info, '/path/to/data')
         # Create unique `sample` identifier
         .rename_axis('sample')
         .reset_index()
