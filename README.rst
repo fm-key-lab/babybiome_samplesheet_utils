@@ -22,19 +22,27 @@ Usage
     import babybiome_samplesheet_utils as bbb
     import pandas as pd
 
-
-    sample_info = pd.read_excel('/path/to/samples.xlsx', engine='openpyxl', names=['ID', 'species'])
+    read_kwargs = {
+        'engine': 'openpyxl',
+        'names': ['ID', 'species']
+    }
 
     samplesheet = (
-        bbb.create_samplesheet(sample_info, '/path/to/data')
+        pd.read_excel('/path/to/samples.xlsx', **read_kwargs)
+        .pipe(bbb.create_samplesheet, directory='/path/to/data')
         # Create unique `sample` identifier
         .rename_axis('sample')
         .reset_index()
         # NOTE: For real usage, log before blind drops
         .dropna()
+        .pipe(bbb.SamplesheetSchema.validate)
     )
 
-    bbb.SamplesheetSchema.validate(samplesheet)
+    # No paths were found for the following IDs:
+    # B001-2406,
+    # B001-2407,
+    # B001-2408
+
 
 .. _pyscaffold-notes:
 
