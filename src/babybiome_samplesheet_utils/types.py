@@ -7,10 +7,8 @@ import pandera
 class BabyBiomeDataSchema(pandera.DataFrameModel):
     ID: str = pandera.Field(str_matches='^B00[12]-')
 
-
 class RawSampleDataSchema(BabyBiomeDataSchema):
     pass
-
 
 class SamplesheetSchema(BabyBiomeDataSchema):
     sample: int
