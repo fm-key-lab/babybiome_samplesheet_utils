@@ -4,9 +4,16 @@ import pandas as pd
 import pandera
 
 
-class SamplesheetSchema(pandera.DataFrameModel):
-    sample: int
+class BabyBiomeDataSchema(pandera.DataFrameModel):
     ID: str = pandera.Field(str_matches='^B00[12]-')
+
+
+class RawSampleDataSchema(BabyBiomeDataSchema):
+    pass
+
+
+class SamplesheetSchema(BabyBiomeDataSchema):
+    sample: int
     fastq_1: str
     fastq_2: str
     

@@ -7,7 +7,10 @@ from babybiome_samplesheet_utils.pathfinder import (
     PathFinder,
     FASTQPathFinder
 )
-from babybiome_samplesheet_utils.types import SamplesheetSchema
+from babybiome_samplesheet_utils.types import (
+    RawSampleDataSchema,
+    SamplesheetSchema
+)
 
 
 try:
@@ -23,6 +26,8 @@ def create_samplesheet(samples, directory):
     """Convenience function to create the sample sheet."""
     import pandas as pd
 
+    samples = RawSampleDataSchema.validate(samples)
+    
     fastq_finder = FASTQPathFinder(directory)
     fastq_paths = fastq_finder.find_paths(samples['ID'])
 
@@ -39,6 +44,7 @@ __all__ = [
     utils,
     PathFinder,
     FASTQPathFinder,
+    RawSampleDataSchema,
     SamplesheetSchema,
     create_samplesheet,
 ]
